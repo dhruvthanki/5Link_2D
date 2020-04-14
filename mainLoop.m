@@ -2,6 +2,28 @@ clear;
 close all;
 clc;
 
+compile=false;
+if(compile)
+    matrices
+    Ematrices
+    lieController
+end
+
+optimise=false;
+if(optimise)
+    warning('off','all');
+    % fix = open('fixed_point_F=0.mat');
+    % ival1 = (fix.x)';
+    ival1 = 1+rand(26,1);
+    LB = ival1(1:26) - 10;
+    UB = ival1(1:26) + 10;
+
+    options = optimset('UseParallel',true,'Display','iter','TolFun',1e-10,'TolX',1e-10,'MaxFunEvals',10000);
+    x = fmincon('objective',ival1,[],[],[],[],LB,UB,'nonlinear',options);
+
+    save('new_value_mod.mat','x');
+end
+
 fix1 = open('fixed_point_F=0.mat');  %working already converged
 fix2 = open('fixed_point_mod.mat'); %working but already converged
 fix3 = open('goodout.mat');  %working
