@@ -26,18 +26,18 @@ for i = 1:step
     ts = t(length(t));
     yout = [yout; y];
     tout = [tout; t];
-%     step_length = StepLen(ye);
-%     clear u h hdot F_con
-%     for j = 1:length(t)
-%         u(j,:) = controller(y(j,:),a,thm,thp);
-%         h(j,:) = h_q(y(j,:),a,thm,thp);
-%         hdot(j,:) = Lfh(y(j,:),a,thm,thp);
-%         F_con(j,:) = contact_force(y(j,:),u(j,:));
-%     end
-%     uout = [uout; u];
-%     hout = [hout; h];
-%     hout_d = [hout_d; hdot];
-%     Fcon_out = [Fcon_out; F_con];
+    step_length = StepLen(ye);
+    clear u h hdot F_con
+    for j = 1:length(t)
+        [z, u] = closedLoopControl(t,y(j,:),a,thm,thp);
+        h(j,:) = h_q(y(j,:),a,thm,thp);
+        hdot(j,:) = Lfh(y(j,:),a,thm,thp);
+        F_con(j,:) = contact_force(y(j,:),u');
+    end
+    uout = [uout; u];
+    hout = [hout; h];
+    hout_d = [hout_d; hdot];
+    Fcon_out = [Fcon_out; F_con];
 end
 
 th = yout(:,1) + yout(:,2) + 0.5*yout(:,4);
