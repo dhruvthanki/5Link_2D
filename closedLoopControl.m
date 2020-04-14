@@ -1,4 +1,4 @@
-function [cLC, u, fx, gx] = closedLoopControl(t,x,a,thm,thp)
+function [cLC, u] = closedLoopControl(t,x,a,thm,thp)
 
 e = 0.1;
 Kp = (16/(e^2))*eye(4);

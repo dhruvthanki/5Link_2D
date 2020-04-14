@@ -9,7 +9,8 @@ if isempty(ye)
 else
     p2 = StepLen(ye);
     for j = 1:length(t)
-        u(:,j) = controller(y(j,:),a,thm,thp);
+        [z, p] = closedLoopControl(t,y(j,:),a,thm,thp);
+        u(:,j) = p;
     end
     cost = abs(abs(norm(u))/p2(1));
 end

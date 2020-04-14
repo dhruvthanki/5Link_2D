@@ -29,10 +29,11 @@ for i = 1:step
     step_length = StepLen(ye);
     clear u h hdot F_con
     for j = 1:length(t)
-        [z, u] = closedLoopControl(t,y(j,:),a,thm,thp);
+        [z, p] = closedLoopControl(t,y(j,:),a,thm,thp);
+        u(:,j) = p;
         h(j,:) = h_q(y(j,:),a,thm,thp);
         hdot(j,:) = Lfh(y(j,:),a,thm,thp);
-        F_con(j,:) = contact_force(y(j,:),u');
+        F_con(j,:) = contact_force(y(j,:),u(:,j)');
     end
     uout = [uout; u];
     hout = [hout; h];
